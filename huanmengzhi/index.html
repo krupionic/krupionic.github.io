@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>幻梦之晓2.0-版本特色、玩法机制与上手攻略全解析</title>
+<meta name="description" content="幻梦之晓2.0 版本专题：梳理这一版本的更新方向、核心玩法机制、角色与关卡设计思路、上手流程与常见问题，帮助新老玩家快速了解幻梦之晓2.0 的定位与体验重点。">
+<meta name="keywords" content="幻梦之晓2.0,幻梦之晓,版本更新,玩法机制,上手攻略,角色养成">
+<script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+<style>
+  :root{
+    --bg:#0b0d1a;
+    --bg-soft:#141834;
+    --panel:#1b2044;
+    --panel-2:#232a56;
+    --line:rgba(140,160,255,.18);
+    --text:#e8ebff;
+    --muted:#a3aad4;
+    --accent:#8b7dff;
+    --accent-2:#4fd6e0;
+    --accent-3:#ff8fc7;
+    --radius:16px;
+    --shadow:0 18px 40px rgba(6,8,24,.55);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,-apple-system,sans-serif;
+    background:
+      radial-gradient(1100px 620px at 12% -8%, rgba(139,125,255,.28), transparent 62%),
+      radial-gradient(900px 520px at 92% 4%, rgba(79,214,224,.18), transparent 60%),
+      linear-gradient(180deg,#0b0d1a 0%,#0f1228 55%,#0b0d1a 100%);
+    color:var(--text);
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{width:100%;max-width:1180px;margin:0 auto;padding:0 20px;}
+
+  /* ---------- 顶部导航 ---------- */
+  .site-header{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(14px);
+    background:rgba(11,13,26,.82);
+    border-bottom:1px solid var(--line);
+  }
+  .header-inner{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:18px;height:68px;
+  }
+  .logo{
+    display:flex;align-items:center;gap:10px;
+    font-size:19px;font-weight:700;letter-spacing:.5px;
+    white-space:nowrap;
+  }
+  .logo-mark{
+    width:34px;height:34px;border-radius:11px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    display:grid;place-items:center;
+    font-size:15px;color:#0b0d1a;font-weight:800;
+    box-shadow:0 8px 20px rgba(139,125,255,.4);
+  }
+  .logo span{color:var(--accent-2);}
+  .main-nav{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+  .main-nav a{
+    font-size:14px;color:var(--muted);
+    padding:8px 13px;border-radius:10px;
+    transition:.22s;
+  }
+  .main-nav a:hover{color:#fff;background:rgba(139,125,255,.16);}
+  .nav-cta{
+    font-size:14px;font-weight:600;
+    padding:9px 18px;border-radius:999px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-3));
+    color:#fff;box-shadow:0 10px 22px rgba(139,125,255,.34);
+    white-space:nowrap;
+  }
+  .nav-toggle{
+    display:none;background:none;border:1px solid var(--line);
+    color:var(--text);font-size:18px;border-radius:10px;
+    width:40px;height:38px;cursor:pointer;
+  }
+
+  /* ---------- 首屏 ---------- */
+  .hero{padding:64px 0 54px;position:relative;overflow:hidden;}
+  .hero::after{
+    content:"";position:absolute;inset:auto -10% -60% 40%;
+    height:420px;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,143,199,.16),transparent 68%);
+    pointer-events:none;
+  }
+  .hero-grid{
+    display:grid;grid-template-columns:1.25fr .95fr;
+    gap:44px;align-items:center;position:relative;z-index:1;
+  }
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:13px;color:var(--accent-2);
+    border:1px solid rgba(79,214,224,.35);
+    background:rgba(79,214,224,.08);
+    padding:6px 14px;border-radius:999px;margin-bottom:20px;
+  }
+  .badge i{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--accent-2);display:inline-block;
+    box-shadow:0 0 10px var(--accent-2);
+  }
+  .hero h1{
+    font-size:clamp(28px,4.4vw,46px);
+    line-height:1.28;margin:0 0 18px;font-weight:800;
+    letter-spacing:.4px;
+  }
+  .hero h1 em{
+    font-style:normal;
+    background:linear-gradient(120deg,var(--accent-2),var(--accent-3));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p.lead{
+    font-size:16px;color:var(--muted);margin:0 0 26px;max-width:640px;
+  }
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:12px 24px;border-radius:12px;
+    font-size:15px;font-weight:600;cursor:pointer;
+    border:1px solid transparent;transition:.24s;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg,var(--accent),var(--accent-3));
+    color:#fff;box-shadow:0 12px 26px rgba(139,125,255,.32);
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 32px rgba(139,125,255,.44);}
+  .btn-ghost{
+    border-color:var(--line);color:var(--text);
+    background:rgba(255,255,255,.03);
+  }
+  .btn-ghost:hover{border-color:var(--accent);color:#fff;background:rgba(139,125,255,.12);}
+
+  .hero-card{
+    background:linear-gradient(160deg,rgba(35,42,86,.95),rgba(20,24,52,.95));
+    border:1px solid var(--line);
+    border-radius:22px;padding:26px;
+    box-shadow:var(--shadow);
+  }
+  .hero-card h2{
+    font-size:16px;margin:0 0 16px;font-weight:700;
+    display:flex;align-items:center;gap:9px;
+  }
+  .hero-card h2::before{
+    content:"";width:4px;height:16px;border-radius:3px;
+    background:linear-gradient(var(--accent-2),var(--accent));
+  }
+  .kv-list{list-style:none;margin:0;padding:0;display:grid;gap:13px;}
+  .kv-list li{
+    display:flex;justify-content:space-between;gap:14px;
+    font-size:14px;padding-bottom:12px;
+    border-bottom:1px dashed var(--line);
+  }
+  .kv-list li:last-child{border-bottom:none;padding-bottom:0;}
+  .kv-list .k{color:var(--muted);}
+  .kv-list .v{color:var(--text);font-weight:600;text-align:right;}
+
+  /* ---------- 通用区块 ---------- */
+  section{padding:56px 0;}
+  .sec-head{margin-bottom:30px;max-width:760px;}
+  .sec-tag{
+    font-size:13px;letter-spacing:2px;color:var(--accent-2);
+    text-transform:uppercase;font-weight:600;margin-bottom:10px;
+  }
+  .sec-head h2{
+    font-size:clamp(22px,3vw,30px);margin:0 0 12px;font-weight:800;
+  }
+  .sec-head p{color:var(--muted);font-size:15px;margin:0;}
+
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;}
+
+  .card{
+    background:linear-gradient(165deg,rgba(27,32,68,.92),rgba(17,20,44,.92));
+    border:1px solid var(--line);border-radius:var(--radius);
+    padding:24px;transition:.26s;
+  }
+  .card:hover{
+    transform:translateY(-4px);
+    border-color:rgba(139,125,255,.5);
+    box-shadow:0 18px 34px rgba(8,10,30,.6);
+  }
+  .card .icon{
+    width:44px;height:44px;border-radius:13px;
+    display:grid;place-items:center;font-size:19px;
+    background:rgba(139,125,255,.16);
+    border:1px solid rgba(139,125,255,.3);
+    margin-bottom:16px;
+  }
+  .card h3{font-size:17px;margin:0 0 10px;font-weight:700;}
+  .card p{font-size:14px;color:var(--muted);margin:0;}
+
+  /* ---------- 玩法模块 ---------- */
+  .feature-row{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:22px;
+  }
+  .feature{
+    display:flex;gap:16px;
+    background:rgba(255,255,255,.025);
+    border:1px solid var(--line);
+    border-radius:var(--radius);padding:22px;
+  }
+  .feature .num{
+    flex:0 0 40px;height:40px;border-radius:12px;
+    display:grid;place-items:center;font-weight:800;font-size:15px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    color:#0b0d1a;
+  }
+  .feature h3{margin:0 0 8px;font-size:16px;}
+  .feature p{margin:0;font-size:14px;color:var(--muted);}
+
+  /* ---------- 时间线 / 版本脉络 ---------- */
+  .timeline{
+    position:relative;margin-top:8px;padding-left:26px;
+    border-left:2px solid rgba(139,125,255,.28);
+    display:grid;gap:26px;
+  }
+  .timeline .node{position:relative;}
+  .timeline .node::before{
+    content:"";position:absolute;left:-34px;top:6px;
+    width:14px;height:14px;border-radius:50%;
+    background:var(--bg);border:3px solid var(--accent-2);
+    box-shadow:0 0 12px rgba(79,214,224,.6);
+  }
+  .timeline h3{margin:0 0 6px;font-size:16px;}
+  .timeline p{margin:0;font-size:14px;color:var(--muted);}
+
+  /* ---------- 上手步骤 ---------- */
+  .steps{counter-reset:step;display:grid;gap:16px;}
+  .step{
+    display:flex;gap:18px;align-items:flex-start;
+    background:linear-gradient(120deg,rgba(35,42,86,.7),rgba(17,20,44,.7));
+    border:1px solid var(--line);border-radius:var(--radius);
+    padding:20px 22px;
+  }
+  .step::before{
+    counter-increment:step;content:counter(step,decimal-leading-zero);
+    font-size:18px;font-weight:800;color:var(--accent-2);
+    flex:0 0 auto;letter-spacing:1px;
+  }
+  .step h3{margin:0 0 6px;font-size:16px;}
+  .step p{margin:0;font-size:14px;color:var(--muted);}
+
+  /* ---------- 侧栏 + 正文 ---------- */
+  .split{
+    display:grid;grid-template-columns:1.6fr 1fr;gap:30px;align-items:start;
+  }
+  .article-body h3{font-size:17px;margin:26px 0 10px;}
+  .article-body h3:first-child{margin-top:0;}
+  .article-body p{font-size:15px;color:#c9cff0;margin:0 0 14px;}
+  .article-body ul{margin:0 0 16px;padding-left:20px;color:#c9cff0;font-size:15px;}
+  .article-body li{margin-bottom:8px;}
+
+  .aside-box{
+    background:linear-gradient(165deg,rgba(27,32,68,.95),rgba(15,18,40,.95));
+    border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px;margin-bottom:20px;
+  }
+  .aside-box h3{
+    font-size:15px;margin:0 0 14px;font-weight:700;
+    display:flex;align-items:center;gap:8px;
+  }
+  .aside-box h3::before{
+    content:"";width:3px;height:14px;border-radius:2px;
+    background:var(--accent-3);
+  }
+  .tag-cloud{display:flex;flex-wrap:wrap;gap:9px;}
+  .tag-cloud span{
+    font-size:13px;color:var(--muted);
+    border:1px solid var(--line);border-radius:999px;
+    padding:5px 12px;transition:.2s;
+  }
+  .tag-cloud span:hover{color:#fff;border-color:var(--accent);background:rgba(139,125,255,.14);}
+  .mini-list{list-style:none;margin:0;padding:0;display:grid;gap:12px;}
+  .mini-list li{
+    font-size:14px;color:var(--muted);
+    padding-left:16px;position:relative;
+  }
+  .mini-list li::before{
+    content:"";position:absolute;left:0;top:9px;
+    width:6px;height:6px;border-radius:50%;
+    background:var(--accent-2);
+  }
+
+  /* ---------- FAQ ---------- */
+  .faq{display:grid;gap:14px;}
+  .faq-item{
+    border:1px solid var(--line);border-radius:14px;
+    background:rgba(255,255,255,.02);overflow:hidden;
+  }
+  .faq-q{
+    width:100%;text-align:left;background:none;border:none;
+    color:var(--text);font-size:15px;font-weight:600;
+    padding:18px 20px;cursor:pointer;
+    display:flex;justify-content:space-between;gap:14px;align-items:center;
+    font-family:inherit;
+  }
+  .faq-q .arrow{
+    transition:.28s;color:var(--accent-2);font-size:13px;flex:0 0 auto;
+  }
+  .faq-item.open .faq-q .arrow{transform:rotate(180deg);}
+  .faq-a{
+    max-height:0;overflow:hidden;transition:max-height .32s ease;
+  }
+  .faq-a p{
+    margin:0;padding:0 20px 18px;
+    font-size:14px;color:var(--muted);
+  }
+  .faq-item.open .faq-a{max-height:320px;}
+
+  /* ---------- 页脚 ---------- */
+  .site-footer{
+    border-top:1px solid var(--line);
+    background:rgba(8,10,22,.85);
+    padding:44px 0 26px;margin-top:20px;
+  }
+  .footer-grid{
+    display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:30px;
+    padding-bottom:26px;border-bottom:1px solid var(--line);
+  }
+  .footer-grid h4{font-size:15px;margin:0 0 14px;}
+  .footer-grid p{font-size:13px;color:var(--muted);margin:0;max-width:360px;}
+  .footer-links{list-style:none;margin:0;padding:0;display:grid;gap:10px;}
+  .footer-links a{font-size:13px;color:var(--muted);transition:.2s;}
+  .footer-links a:hover{color:var(--accent-2);}
+  .copyright{
+    padding-top:20px;font-size:13px;color:#7c83ad;
+    display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  }
+
+  /* ---------- 响应式 ---------- */
+  @media (max-width:960px){
+    .hero-grid{grid-template-columns:1fr;gap:32px;}
+    .grid-3{grid-template-columns:repeat(2,1fr);}
+    .split{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:720px){
+    .main-nav{display:none;}
+    .nav-toggle{display:block;}
+    .site-header.nav-open .main-nav{
+      display:flex;position:absolute;top:68px;left:0;right:0;
+      flex-direction:column;align-items:stretch;gap:4px;
+      background:rgba(11,13,26,.98);
+      padding:14px 20px 20px;border-bottom:1px solid var(--line);
+    }
+    .nav-cta{display:none;}
+    .grid-3,.grid-2,.feature-row{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr;}
+    section{padding:42px 0;}
+    .hero{padding:44px 0 40px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header" id="siteHeader">
+  <div class="wrap header-inner">
+    <a class="logo" href="#top">
+      <span class="logo-mark">幻</span>
+      幻梦之晓<span>2.0</span>
+    </a>
+    <nav class="main-nav" id="mainNav">
+      <a href="#intro">版本概览</a>
+      <a href="#features">核心玩法</a>
+      <a href="#system">系统模块</a>
+      <a href="#guide">上手指引</a>
+      <a href="#faq">常见问题</a>
+    </nav>
+    <a class="nav-cta" href="#guide">查看上手流程</a>
+    <button class="nav-toggle" id="navToggle" aria-label="展开导航">☰</button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- 首屏 -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="badge"><i></i>版本专题 · 幻梦之晓 2.0</span>
+        <h1>幻梦之晓2.0：<em>梦境世界的一次整体升级</em></h1>
+        <p class="lead">
+          幻梦之晓2.0 是该系列的一次较大幅度版本迭代。相比早期版本，它在世界观延展、角色成长路径、
+          关卡节奏与操作反馈上都做了重新梳理。本页围绕“2.0 到底改了什么、适合什么样的玩家、第一次接触该怎么上手”
+          三个核心问题展开，帮助你在进入梦境之前先建立清晰预期。
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#features">了解核心玩法</a>
+          <a class="btn btn-ghost" href="#guide">查看新手上手流程</a>
+        </div>
+      </div>
+
+      <aside class="hero-card">
+        <h2>版本速览</h2>
+        <ul class="kv-list">
+          <li><span class="k">版本定位</span><span class="v">系统性迭代</span></li>
+          <li><span class="k">主要变化</span><span class="v">玩法与成长重构</span></li>
+          <li><span class="k">适合人群</span><span class="v">新老玩家均可</span></li>
+          <li><span class="k">上手门槛</span><span class="v">循序渐进</span></li>
+          <li><span class="k">体验重点</span><span class="v">探索 · 养成 · 剧情</span></li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 版本概览 -->
+  <section id="intro">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-tag">Version Overview</div>
+        <h2>幻梦之晓2.0 是一次怎样的更新</h2>
+        <p>
+          很多玩家搜索“幻梦之晓2.0”，往往是想先弄清楚它与旧版本之间的关系。简单来说，
+          2.0 并不是在原有内容上做简单叠加，而是把玩法框架、成长节奏和叙事结构重新对齐，
+          让整个体验更连贯，也更容易被新玩家理解。
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <article class="card">
+          <div class="icon">🌙</div>
+          <h3>世界观延续与扩展</h3>
+          <p>
+            梦境主线在 2.0 中得到延续，新的场景与角色被纳入原有设定体系，
+            整体叙事更强调“梦境”与“现实”之间的呼应关系，而非单纯堆叠关卡。
+          </p>
+        </article>
+        <article class="card">
+          <div class="icon">⚙️</div>
+          <h3>玩法框架重排</h3>
+          <p>
+            2.0 对操作逻辑与战斗节奏做了统一整理，减少了早期版本中容易让人困惑的重复步骤，
+            让每一次决策都更有明确反馈。
+          </p>
+        </article>
+        <article class="card">
+          <div class="icon">📈</div>
+          <h3>成长曲线更平滑</h3>
+          <p>
+            角色养成路径被拆分为更清晰的阶段，新手期不再需要一次性理解全部系统，
+            而是随着进度逐步解锁，降低理解成本。
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 核心玩法 -->
+  <section id="features">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-tag">Core Gameplay</div>
+        <h2>核心玩法：2.0 版本体验的四个支点</h2>
+        <p>
+          如果要用几个关键词概括幻梦之晓2.0 的体验方向，大致可以落在探索、养成、策略与叙事这四块。
+          它们彼此关联，共同决定了你在梦境中的推进方式。
+        </p>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature">
+          <div class="num">01</div>
+          <div>
+            <h3>梦境探索</h3>
+            <p>
+              场景探索是推进主线的基础方式。2.0 更强调场景之间的逻辑关联，
+              玩家在探索中获得的线索会直接影响后续路线的选择。
+            </p>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="num">02</div>
+          <div>
+            <h3>角色养成</h3>
+            <p>
+              养成围绕角色定位展开，不同角色在队伍中承担不同职责。
+              2.0 将资源投入方向做了更明确的区分，避免养成路线互相冲突。
+            </p>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="num">03</div>
+          <div>
+            <h3>策略搭配</h3>
+            <p>
+              面对不同关卡，队伍组合与技能释放顺序会影响最终结果。
+              2.0 强化了策略层面的深度，让搭配不再只是数值堆叠。
+            </p>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="num">04</div>
+          <div>
+            <h3>剧情体验</h3>
+            <p>
+              剧情在 2.0 中承担了串联各系统的角色。通过对话与事件推进，
+              玩家能更自然地理解世界观设定与角色动机。
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 系统模块 + 版本脉络 -->
+  <section id="system">
+    <div class="wrap split">
+      <div class="article-body">
+        <div class="sec-tag">System Modules</div>
+        <h2 style="font-size:clamp(22px,3vw,30px);margin:0 0 18px;font-weight:800;">2.0 的主要系统模块</h2>
+
+        <h3>成长系统</h3>
+        <p>
+          成长系统是幻梦之晓2.0 的基础骨架。角色等级、技能与装备三条线相互配合，
+          共同决定角色在战斗中的表现。建议新手先集中资源培养一到两名核心角色，
+          再逐步扩展到完整队伍，避免资源分散导致推进受阻。
+        </p>
+
+        <h3>关卡与难度设计</h3>
+        <p>
+          2.0 的关卡设计更注重节奏变化，普通关卡用于熟悉机制，
+          关键节点则考验阵容搭配与操作细节。遇到卡关时，优先检查队伍配置是否合理，
+          而不是单纯提升数值。
+        </p>
+
+        <h3>任务与日常循环</h3>
+        <p>
+          日常任务提供了稳定的资源来源，也是维持进度的主要方式。
+          2.0 对日常内容做了精简，减少了重复性操作，
+          让玩家可以把更多时间放在主线探索与策略研究上。
+        </p>
+
+        <h3>收集与图鉴</h3>
+        <p>
+          收集要素在 2.0 中依然保留，并与世界观设定结合。
+          完成收集不仅能获得实际收益，也能补全对梦境世界的理解。
+          对于喜欢挖掘设定的玩家，这部分内容值得留意。
+        </p>
+
+        <h3>界面与操作反馈</h3>
+        <p>
+          界面布局在 2.0 中做了调整，常用功能被集中到更易触达的位置，
+          减少层级跳转。操作反馈更加直接，技能释放、状态变化都有清晰的视觉提示，
+          有助于在快节奏战斗中做出判断。
+        </p>
+      </div>
+
+      <aside>
+        <div class="aside-box">
+          <h3>版本脉络</h3>
+          <div class="timeline">
+            <div class="node">
+              <h3>早期版本</h3>
+              <p>建立基础世界观与核心玩法框架，确定梦境主题基调。</p>
+            </div>
+            <div class="node">
+              <h3>过渡阶段</h3>
+              <p>逐步补充角色与关卡内容，同时收集玩家反馈。</p>
+            </div>
+            <div class="node">
+              <h3>幻梦之晓2.0</h3>
+              <p>对玩法、成长与叙事做整体梳理，形成更完整的体验闭环。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="aside-box">
+          <h3>适合人群</h3>
+          <ul class="mini-list">
+            <li>喜欢剧情驱动与世界观设定的玩家</li>
+            <li>偏好策略搭配而非纯数值碾压的玩家</li>
+            <li>希望有清晰成长路径的新手玩家</li>
+            <li>关注版本变化、想重新回坑的老玩家</li>
+          </ul>
+        </div>
+
+        <div class="aside-box">
+          <h3>相关标签</h3>
+          <div class="tag-cloud">
+            <span>梦境题材</span>
+            <span>角色养成</span>
+            <span>策略搭配</span>
+            <span>剧情推进</span>
+            <span>版本更新</span>
+            <span>新手上手</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 上手指引 -->
+  <section id="guide">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-tag">Getting Started</div>
+        <h2>第一次接触幻梦之晓2.0 的上手顺序</h2>
+        <p>
+          对于新玩家来说，最容易出问题的地方不是操作，而是不知道该先做什么。
+          下面这份顺序按“先建立理解、再投入资源”的思路整理，可以作为参考。
+        </p>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div>
+            <h3>先完成引导，理解基础操作</h3>
+            <p>
+              引导阶段会介绍移动、交互与基础战斗逻辑。不要急着跳过，
+              这些内容在后续关卡中会反复用到。
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <h3>确定一到两名核心角色</h3>
+            <p>
+              早期资源有限，集中培养核心角色能更快形成战斗力。
+              选择时优先考虑操作手感与队伍适配度，而不是单纯看初始强度。
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <h3>推进主线，解锁系统模块</h3>
+            <p>
+              2.0 的系统是逐步解锁的，主线推进本身就是最好的教学。
+              每解锁一个新模块，先花几分钟了解它的作用再继续。
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <h3>建立日常循环</h3>
+            <p>
+              当主线推进到一定阶段后，可以开始安排日常任务，
+              保证资源稳定积累，为后续高难度内容做准备。
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <h3>研究搭配，挑战更高难度</h3>
+            <p>
+              有了稳定的角色基础后，再尝试不同阵容组合。
+              2.0 的策略深度在这一阶段会体现得更明显。
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-tag">FAQ</div>
+        <h2>关于幻梦之晓2.0 的常见问题</h2>
+        <p>以下问题来自玩家在接触 2.0 版本时较常提出的疑问，整理供参考。</p>
+      </div>
+
+      <div class="faq" id="faqBox">
+        <div class="faq-item">
+          <button class="faq-q">幻梦之晓2.0 和旧版本是什么关系？<span class="arrow">▼</span></button>
+          <div class="faq-a"><p>2.0 是在原有世界观与玩法基础上进行的整体迭代，而非完全独立的新作。它保留了核心设定，同时重新梳理了成长路径、关卡节奏与界面结构，使整体体验更连贯。</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">新手直接玩 2.0 会不会跟不上？<span class="arrow">▼</span></button>
+          <div class="faq-a"><p>2.0 的系统是逐步解锁的，引导阶段会覆盖基础操作与核心概念。只要按顺序推进主线，理解成本是可控的，不需要提前掌握旧版本内容。</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">资源应该优先投入到哪里？<span class="arrow">▼</span></button>
+          <div class="faq-a"><p>建议优先集中在一到两名核心角色上，形成稳定的推进能力，再逐步扩展到完整队伍。分散投入容易导致整体进度变慢。</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">卡关了应该先做什么？<span class="arrow">▼</span></button>
+          <div class="faq-a"><p>先检查队伍配置与技能搭配是否合理，再考虑数值提升。2.0 的关卡更看重策略，单纯堆数值未必能解决问题。</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">2.0 的剧情需要按顺序看吗？<span class="arrow">▼</span></button>
+          <div class="faq-a"><p>建议按主线顺序推进。剧情之间存在前后呼应，按顺序体验更容易理解角色动机与世界观设定。</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h4>幻梦之晓2.0 版本专题</h4>
+        <p>
+          本页围绕幻梦之晓2.0 的版本定位、玩法机制与上手方式整理内容，
+          供玩家在进入梦境世界前建立清晰预期。
+        </p>
+      </div>
+      <div>
+        <h4>内容导航</h4>
+        <ul class="footer-links">
+          <li><a href="#intro">版本概览</a></li>
+          <li><a href="#features">核心玩法</a></li>
+          <li><a href="#system">系统模块</a></li>
+          <li><a href="#guide">上手指引</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>快速跳转</h4>
+        <ul class="footer-links">
+          <li><a href="#faq">常见问题</a></li>
+          <li><a href="#top">返回顶部</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copyright">
+      <span>幻梦之晓2.0 · 版本内容专题页</span>
+      <span>内容以玩法说明与上手参考为主</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // 移动端导航展开
+  var navToggle = document.getElementById('navToggle');
+  var siteHeader = document.getElementById('siteHeader');
+  if (navToggle && siteHeader) {
+    navToggle.addEventListener('click', function () {
+      siteHeader.classList.toggle('nav-open');
+    });
+    document.getElementById('mainNav').addEventListener('click', function (e) {
+      if (e.target.tagName === 'A') {
+        siteHeader.classList.remove('nav-open');
+      }
+    });
+  }
+
+  // FAQ 折叠
+  var faqBox = document.getElementById('faqBox');
+  if (faqBox) {
+    var questions = faqBox.querySelectorAll('.faq-q');
+    questions.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var item = btn.parentElement;
+        var isOpen = item.classList.contains('open');
+        faqBox.querySelectorAll('.faq-item').forEach(function (el) {
+          el.classList.remove('open');
+        });
+        if (!isOpen) {
+          item.classList.add('open');
+        }
+      });
+    });
+  }
+</script>
+
+</body>
+</html>
